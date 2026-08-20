@@ -1,12 +1,20 @@
 import asyncio
 import json
+import sys
+from pathlib import Path
 
 from fastmcp import Client
-from mcp_knowledge_assistant.server import mcp
+from fastmcp.client.transports import StdioTransport
 
 
 async def main() -> None:
-    async with Client(mcp) as client:
+    transport = StdioTransport(
+        command=sys.executable,
+        args=["-m", "mcp_knowledge_assistant.server"],
+        cwd=str(Path(__file__).parent),
+    )
+
+    async with Client(transport) as client:
         tools = await client.list_tools()
         print("Available tools:", [tool.name for tool in tools])
 
