@@ -64,22 +64,19 @@ def search(query: str) -> SearchOutput:
         vector_store_id=VECTOR_STORE_ID, query=query
     )
 
-    results = []
+
+    results_by_id: dict[str, SearchResult] = {}
 
     # Process the vector store search results
-    if hasattr(response, "data") and response.data:
-        for i, item in enumerate(response.data):
-            # Extract file_id, filename, and content
-            item_id = getattr(item, "file_id", f"vs_{i}")
-            item_filename = getattr(item, "filename", f"Document {i + 1}")
-
-            result = SearchResult(
-                id=item_id,
-                title=item_filename,
-                url=f"https://platform.openai.com/storage/files/{item_id}",
+    for item in response.data:
+        if item.file_id not in results_by_id:
+            results_by_id[item.file_id] = SearchResult(
+                id=item.file_id,
+                title=item.filename,
+                url=f"https://platform.openai.com/storage/files/{item.file_id}",
             )
 
-            results.append(result)
+    results = list(results_by_id.values())
 
     logger.info(f"Vector store search returned {len(results)} results")
     return SearchOutput(results=results)
@@ -118,18 +115,13 @@ def fetch(id: str) -> FetchOutput:
         vector_store_id=VECTOR_STORE_ID, file_id=id
     )
 
-    file_content = ""
+    content_parts: list[str] = []
 
-    # Extract content from paginated response
-    if hasattr(content_response, "data") and content_response.data:
-        # Combine all content chunks from FileContentResponse objects
-        content_parts: list[str] = []
+    for content_item in content_response.data:
+        if content_item.text:
+            content_parts.append(content_item.text)
 
-        for content_item in content_response.data:
-            if content_item.text:
-                content_parts.append(content_item.text)
-
-        file_content = "\n".join(content_parts) or "No content available"
+    file_content = "\n".join(content_parts) or "No content available"
 
     # Use filename as title and create proper URL for citations
     filename = getattr(file_info, "filename", f"Document {id}")
