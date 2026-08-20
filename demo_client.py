@@ -20,17 +20,13 @@ async def main() -> None:
 
         search_result = await client.call_tool(
             "search",
-            {"query": "Why separate search from fetching full documents?"}
+            {"query": "Why separate search from fetching full documents?"},
         )
         print("\nSearch result:")
         print(json.dumps(search_result.structured_content, indent=2))
-        #
         document_id = search_result.structured_content["results"][0]["id"]
 
-        fetch_result = await client.call_tool(
-            "fetch",
-            {"id": document_id}
-        )
+        fetch_result = await client.call_tool("fetch", {"id": document_id})
 
         print("\nFetched document:")
         print(json.dumps(fetch_result.structured_content, indent=2))
