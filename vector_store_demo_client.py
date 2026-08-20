@@ -3,7 +3,7 @@ import asyncio
 from fastmcp import Client
 
 async def main() -> None:
-    async with Client("http://127.0.0.1:8000/sse") as client:
+    async with Client("http://127.0.0.1:8000/mcp") as client:
         tools = await client.list_tools()
         print("Available tools:", [tool.name for tool in tools])
 

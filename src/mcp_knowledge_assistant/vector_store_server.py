@@ -147,15 +147,16 @@ def main():
 
     # Configure and start the server
     logger.info("Starting MCP server on 0.0.0.0:8000")
-    logger.info("Server will be accessible via SSE transport")
+    logger.info("Server will be accessible via Streamable http")
 
     try:
         # Use FastMCP's built-in run method with SSE transport
         port = int(os.environ.get("OPENAI_EXAMPLE_PORT", "8000"))
         mcp.run(
-            transport="sse",
+            transport="http",
             host="0.0.0.0",
             port=port,
+            path="/mcp",
             uvicorn_config={"loop": "asyncio"},
         )
     except KeyboardInterrupt:

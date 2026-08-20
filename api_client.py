@@ -18,9 +18,8 @@ mcp_tool: Mcp = {
 response = client.responses.create(
     model="gpt-5.6-luna",
     input=(
-        "Use the MCP knowledge base. Search for why retrieval separates "
-        "search and fetch, then fetch the most relevant document and "
-        "explain the reason in 2–3 sentences."
+        "Use the MCP knowledge source to explain whether cats become "
+        "attached to their homes. Cite the source."
     ),
     tools=[mcp_tool],
 )
