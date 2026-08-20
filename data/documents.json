@@ -1,0 +1,33 @@
+[
+  {
+    "id": "mcp-basics",
+    "title": "MCP Basics",
+    "url": "https://example.com/knowledge/mcp-basics",
+    "text": "Model Context Protocol is an open protocol for connecting AI applications to tools and data. An MCP server publishes capabilities such as tools, resources, and prompts. An MCP client discovers those capabilities and invokes them using structured protocol messages.",
+    "metadata": {
+      "topic": "mcp",
+      "level": "beginner"
+    }
+  },
+  {
+    "id": "tool-design",
+    "title": "Designing Reliable AI Tools",
+    "url": "https://example.com/knowledge/tool-design",
+    "text": "Reliable AI tools have narrow responsibilities, descriptive names, validated inputs, predictable outputs, and useful error messages. Read-only tools are a good starting point because they cannot modify external state. Consequential actions should use explicit approval and authorization controls.",
+    "metadata": {
+      "topic": "tooling",
+      "level": "intermediate"
+    }
+  },
+  {
+    "id": "retrieval-workflow",
+    "title": "Search and Fetch Retrieval",
+    "url": "https://example.com/knowledge/retrieval-workflow",
+    "text": "A search tool returns a compact list of relevant results. A fetch tool then retrieves the complete content for a selected result. Keeping discovery and retrieval separate reduces unnecessary context and gives the model stable document identifiers to work with.",
+    "metadata": {
+      "topic": "retrieval",
+      "level": "beginner"
+    }
+  }
+]
+
